@@ -1,0 +1,72 @@
+[
+	{
+		"name": "IcyWeather",
+		"abbreviation": "IW",
+		"probability": 0.4
+	},
+	{
+		"name": "Gas",
+		"abbreviation": "G",
+		"probability": 0.6
+	},
+	{
+		"name": "Battery",
+		"abbreviation": "B",
+		"parents": ["IcyWeather"],
+		"probability": {
+			"T": 0.2,
+			"F": 0.5
+		}
+	},
+	{
+		"name": "StarterMotor",
+		"abbreviation": "SM",
+		"parents": ["IcyWeather"],
+		"probability": {
+			"T": 0.4,
+			"F": 0.4
+		}
+	},
+	{
+		"name": "Radio",
+		"abbreviation": "R",
+		"parents": ["Battery"],
+		"probability": {
+			"T": 0.1,
+			"F": 0.3
+		}
+	},
+	{
+		"name": "Ignition",
+		"abbreviation": "I",
+		"parents": ["Battery"],
+		"probability": {
+			"T": 0.6,
+			"F": 0.9
+		}
+	},
+	{
+		"name": "Starts",
+		"abbreviation": "S",
+		"parents": ["Ignition", "StarterMotor", "Gas"],
+		"probability": {
+			"TTT": 0.7,
+			"TTF": 0.1,
+			"TFT": 0.5,
+			"TFF": 0.5,
+			"FTT": 0.1,
+			"FTF": 0.3,
+			"FFT": 0.1,
+			"FFF": 0.2
+		}
+	},
+	{
+		"name": "Moves",
+		"abbreviation": "M",
+		"parents": ["Starts"],
+		"probability": {
+			"T": 0.9,
+			"F": 0.1
+		}
+	}
+]
