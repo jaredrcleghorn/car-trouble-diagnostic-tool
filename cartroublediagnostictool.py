@@ -6,16 +6,16 @@ class BayesNetNode:
 
         if 'parents' in variable:
             self.parents = variable['parents']
-            self.probability = {}
+            self.cpt = {}
 
             for key, value in variable['probability'].items():
-                self.probability[tuple(True if c == 'T' else False for c in key)] = value
+                self.cpt[tuple(True if c == 'T' else False for c in key)] = value
         else:
             self.parents = []
-            self.probability = {(): variable['probability']}
+            self.cpt = {(): variable['probability']}
 
     def probability(self, value, event):
-        probability_true = self.probability[tuple([event[parent] for parent in self.parents])]
+        probability_true = self.cpt[tuple([event[parent] for parent in self.parents])]
         return probability_true if value else 1 - probability_true
 
 class BayesNet:
@@ -38,3 +38,25 @@ with open('variables.json') as f:
     variables = json.load(f)
 
 bayes_net = BayesNet(variables)
+variable_map = {variable['abbreviation']: variable['name'] for variable in variables}
+hypothesis = input('Hypothesis: ')
+event = {}
+
+for abbreviation_value_string in hypothesis.strip().split(','):
+    abbreviation_value = abbreviation_value_string.split('=')
+
+    if len(abbreviation_value) == 2:
+        abbreviation, value = [s.strip() for s in abbreviation_value]
+
+        if abbreviation in variable_map:
+            variable = variable_map[abbreviation]
+            value = True if value == 'true' else False if value == 'false' else None
+
+            if isinstance(value, bool):
+                event[variable] = value
+                continue
+
+    print('error: invalid hypothesis')
+    exit()
+
+print(bayes_net.probability(event))

@@ -14,6 +14,8 @@ To start the script, run
 python3 cartroublediagnostictool.py
 ```
 
+The program will prompt you for a hypothesis, such as `IW=true,B=false,R=false`.
+
 ## Sources
 
 The Bayes net code in this repository is based on the Bayes net code in the [aimacode/aima-python](https://github.com/aimacode/aima-python/blob/master/probability4e.py) repository.
